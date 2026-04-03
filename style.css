@@ -1,0 +1,621 @@
+@import url('https://fonts.googleapis.com/css2?family=Danfo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Afacad:wght@400;700&display=swap');
+
+:root {
+    --bg:           #FAEFC3;
+    --color-dark:   #50002C;
+    --color-text:   #3B2800;
+    --color-white:  #FFFFFF;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+.page {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    overflow: hidden;
+}
+
+/* Общие настройки для всех волн */
+.bottom-section__wave {
+    display: block;    /* Убирает нижний отступ, который есть у inline элементов */
+    width: 100%;
+    height: 100%;
+    object-fit: fill;  /* Заставляет растягиваться, игнорируя пропорции */
+}
+
+.header__wave {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    min-height: 100%;
+}
+
+.header {
+    position: relative;
+    flex-shrink: 0;
+    width: 100%;
+    height: clamp(115px, 14vh, 155px);
+    overflow: hidden;
+}
+
+.header__content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 0.5rem;
+    pointer-events: none;
+}
+
+.header__title {
+    font-family: 'Danfo', serif;
+    font-size: clamp(30px, 11vw, 60px);
+    color: #ff9a00;
+    letter-spacing: 0px;
+    line-height: 1;
+    margin-bottom: 0px;
+    text-align: center;
+}
+
+.header__subtitle {
+    font-family: 'Afacad', sans-serif;
+    font-size: clamp(9px, 10vw, 18px);
+    color: var(--bg);
+    text-align: center;
+    line-height: 1.4;
+}
+
+.header__subtitle strong {
+    font-weight: 700;
+}
+
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: -55px;
+    margin-bottom: -80px;   /* ← было -45px, увеличиваем overlap */
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+    line-height: 0;
+}
+.hero__image {
+    width: auto;
+    max-width: 55%;       /* ограничиваем ширину на десктопе */
+    max-height: 66vh;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    transform: scale(1, 1);
+}
+.streaming {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5%;
+    width: 22%;
+    margin: 0 auto;
+
+    flex-shrink: 0;
+    position: relative;
+    z-index: 3;
+}
+
+.streaming a {
+    display: block;
+    flex: 1;
+    transition: transform 0.2s ease;
+}
+
+.streaming a:hover {
+    transform: scale(1.08);
+}
+
+.streaming img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.lyrics {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 2px;     /* было 5px */
+    flex-shrink: 0;
+}
+.yellow-panel {
+    flex: 1;
+    min-height: 0;
+    position: relative;
+    background: #E8960A;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center;  */
+    justify-content: flex-start;   /* ← было center, меняем на flex-start */
+    padding-top: clamp(10px, 6vh, 45px); 
+}
+
+.yellow-panel__wave {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: clamp(50px, 8vh, 80px);
+}
+.spacer { display: none; }
+
+/* .spacer {
+    flex: 1;
+    min-height: 0;
+} */
+
+.lyrics img {
+    width: 22%;          /* было 25% */
+    max-height: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.lyrics a {
+    display: contents;
+}
+
+.lyrics img:hover {
+    transform: scale(1.03);
+}
+
+.arrow-hint {
+    display: flex;
+    justify-content: center;
+    margin-top: auto;
+    padding-bottom: 8px;
+    flex-shrink: 0;
+}
+
+.arrow-hint img {
+    width: clamp(16px, 2vw, 28px);
+    height: auto;
+    opacity: 0.85;
+}
+
+.drawer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100dvh + 110px);
+    background: transparent;
+    transform: translateY(calc(100% - clamp(80px, 12vh, 120px)));
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+}
+
+.drawer.open {
+    transform: translateY(0);
+}
+
+.drawer__wave {
+    display: block;
+    width: 100%;
+    height: clamp(40px, 8vh, 80px); /* Высота волны. Подрегулируй, если нужно больше/меньше */
+    transform: scaleY(-1); /* Тот самый трюк из старого кода, который переворачивает волну */
+    margin-bottom: -1px; /* Защита от белых микро-щелей между волной и фоном соцсетей */
+    flex-shrink: 0;
+}
+
+.drawer__top {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: transparent;
+    position: relative;
+    width: 100%;
+}
+
+.drawer__top .social {
+    padding: 6px 0 10px;
+}
+
+.drawer__content {
+    flex: 1;
+    overflow-y: visible;
+    padding: clamp(12px, 2vw, 40px);
+    scrollbar-width: none;
+    background: var(--color-dark); /* Красим блок с текстом About */
+    flex-grow: 1;
+    padding-bottom: 0;
+}
+
+.drawer__content::-webkit-scrollbar { display: none; }
+
+
+.social {
+    position: absolute;
+    inset: 0; 
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Прижимаем иконки к нижнему краю волны */
+    padding-bottom: 0px; /* Регулируй этот отступ, чтобы поднять или опустить иконки */
+    background: transparent; /* УБИРАЕМ сплошной цвет! */
+    /* z-index: 10;  */
+    
+    /* Твои старые свойства оставляем: */
+    gap: clamp(16px, 4vw, 48px);
+    width: 100%;
+    margin-top: 100px;
+}
+
+.social__item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+    z-index: 8;
+}
+
+.social__item:hover {
+    transform: scale(1.1);
+}
+
+.social__item img {
+    width: clamp(24px, 2.3vw, 48px);
+    height: auto;
+}
+
+
+.about__title {
+    font-family: 'Danfo', serif;
+    font-size: clamp(52px, 18vw, 120px);
+    color: var(--bg);
+    line-height: 0.9;
+    margin-bottom: 20px;
+    text-align: center;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.about__text {
+    font-family: 'Afacad', sans-serif;
+    font-size: clamp(13px, 1.5vw, 18px);
+    color: var(--bg);
+    text-align: center;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.about__bold {
+    font-family: 'Afacad', sans-serif;
+    font-size: clamp(13px, 1.5vw, 18px);
+    font-weight: 700;
+    color: var(--bg);
+    text-align: center;
+    margin-bottom: 8px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.about__source {
+    font-family: 'Afacad', sans-serif;
+    font-size: clamp(10px, 1.2vw, 14px);
+    color: var(--bg);
+    opacity: 0.6;
+    text-align: center;
+    font-style: italic;
+    margin-bottom: 24px;
+}
+
+.about__text,
+.about__bold,
+.about__source,
+.about__title {
+    padding-left: clamp(20px, 6vw, 80px);
+    padding-right: clamp(20px, 6vw, 80px);
+}
+
+
+
+.prev-works {
+    margin-top: 32px;
+    margin-left: calc(-1 * clamp(20px, 6vw, 80px));   /* ← компенсируем padding */
+    margin-right: calc(-1 * clamp(20px, 6vw, 80px));
+    width: calc(100% + 2 * clamp(20px, 6vw, 80px));   /* ← расширяем на ту же величину */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--bg);
+    padding: 24px 0 32px;
+    position: relative;
+    z-index: 1;  
+    padding: clamp(50px, 10vh, 90px) 0 92px;
+}
+
+.prev-works__wave {
+    display: block;
+    width: calc(100% + 2 * clamp(20px, 6vw, 80px));
+    margin-left: calc(-1 * clamp(20px, 6vw, 80px));
+    height: clamp(40px, 8vh, 80px);
+    margin-bottom: clamp(-120px, -11vh, -50px);   /* ← наезжает вниз */
+    position: relative;
+    z-index: 2;
+}
+
+.prev-works__wave svg {
+    width: 100%;
+    height: 100%;
+}
+
+.prev-works__label {
+    font-family: 'Afacad', sans-serif;
+    font-size: clamp(12px, 1.5vw, 18px);
+    color: #2C2C2C;    /* ← было var(--bg), теперь тёмный */
+    text-align: center;
+    margin-bottom: 14px;
+    letter-spacing: 0.5px;
+}
+
+.prev-works__label strong {
+    font-weight: 700;
+}
+
+.prev-works__cover {
+    width: clamp(260px, 55%, 500px);
+    height: auto;
+    display: block;
+    border-radius: 4px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    cursor: pointer;
+}
+.prev-works__cover:hover {
+    transform: translate(-2px, -2px);
+    filter: drop-shadow(6px 6px 0px rgba(0, 0, 0, 0.25));
+}
+
+
+.drawer-footer {
+    width: calc(100% + 2 * clamp(20px, 6vw, 80px));
+    margin-left: calc(-1 * clamp(20px, 6vw, 80px));
+    margin-top: 0;
+}
+
+.drawer-footer__wave {
+    display: block;
+    width: 100%;
+    height: clamp(40px, 7vh, 70px);
+    transform: scaleY(-1);
+    margin-top: clamp(-70px, -7vh, -40px);   /* ← наезжает на prev-works */
+    position: relative;
+    z-index: 2;
+}
+
+.drawer-footer__content {
+    background: #735F2E;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 24px 20px;
+}
+
+.drawer-footer__contact {
+    font-family: 'Afacad', sans-serif;
+    font-size: clamp(10px, 1.5vw, 16px);
+    color: #FFDF61;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+}
+
+.drawer-footer__contact:hover {
+    opacity: 0.7;
+}
+
+.drawer-footer__logo {
+    width: clamp(180px, 50vw, 320px);
+    height: auto;
+}
+
+.drawer-footer__copy {
+    font-family: 'Afacad', sans-serif;
+    font-size: clamp(8px, 1vw, 12px);
+    color: var(--bg);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-align: center;
+}
+
+.drawer__handle {
+    position: absolute;
+    top: 15px; /* Дистанция от верхнего края шторки */
+    left: 50%;
+    margin-top: 3px;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 4px;
+    background: var(--bg);
+    border-radius: 10px;
+    opacity: 0.5; /* Сделал чуть прозрачнее, чтобы не бросался в глаза */
+    z-index: 15;
+    pointer-events: none;
+    
+    /* Плавная, едва заметная анимация */
+    /* animation: gentleBounce 1s infinite ease-in-out; */
+}
+
+@keyframes gentleBounce {
+    0%, 100% { 
+        transform: translate(-50%, 0); 
+    }
+    50% { 
+        /* Всего 2 пикселя — этого достаточно, чтобы показать интерактивность, 
+           но не раздражать глаз */
+        transform: translate(-50%, -2px); 
+    }
+}
+
+@media (max-width: 480px) {
+    .header { height: clamp(90px, 24vw, 130px); }
+    .header__title { font-size: clamp(26px, 12vw, 42px); }
+    .header__subtitle { font-size: clamp(8px, 3.4vw, 22px); }
+
+    .hero { margin-top: -4.5vh; margin-bottom: -60px; }
+    .hero__image { max-width: 100%; max-height: 60vh; }
+
+    .streaming { width: 80vw; margin-top: 3vh; }
+    .lyrics img { width: 80vw; }
+
+    .yellow-panel { 
+        padding-top: clamp(8px, 4vw, 20px); 
+        min-height: 45vh;
+   }
+    /* .yellow-panel__wave { height: clamp(35px, 8vw, 55px); } */
+
+    /* .drawer__wave { height: clamp(35px, 10vw, 55px); } */
+    /* .social { margin-top: 70px; gap: clamp(10px, 8vw, 32px); } */
+    /* .social__item img { width: clamp(28px, 8vw, 42px); } */
+    .drawer__wave {
+        height: clamp(30px, 3vw, 205px);   /* ← меньше высота = меньше изгибов */
+    }
+    
+    .social {
+        margin-top: 77px;   /* ← было 95px */
+        gap: clamp(10px, 8vw, 38px);
+
+        
+    }
+    .drawer__handle {
+        margin-top: 0px;
+    }
+    .social__item img {
+        width: clamp(24px, 9vw, 40px);
+    }
+    .drawer__content { padding: 16px 16px 0; padding-top: 8vh; }
+    .about__title { font-size: clamp(48px, 18vw, 80px); }
+    .about__text { font-size: clamp(12px, 3.5vw, 16px); }
+    .about__bold { font-size: clamp(12px, 3.5vw, 16px); }
+    .about__source { font-size: clamp(9px, 2.5vw, 12px); }
+    .about__text, .about__bold, .about__source, .about__title {
+        padding-left: 16px; padding-right: 16px;
+    }
+
+    /* .prev-works__wave { height: clamp(30px, 8vw, 50px); margin-bottom: clamp(-60px, -8vw, -30px); } */
+    .prev-works { padding: clamp(40px, 15vw, 120px) 0 60px; }
+    .prev-works__cover { width: 85%; }
+    .prev-works__label { font-size: clamp(10px, 6vw, 18px); }
+    .prev-works { margin-left: -16px; margin-right: -16px; width: calc(100% + 32px); }
+
+    .drawer-footer { margin-left: -16px; width: calc(100% + 32px); }
+    /* .drawer-footer__wave { height: clamp(30px, 8vw, 50px); margin-top: clamp(-50px, -8vw, -30px); } */
+    .drawer-footer__logo { width: clamp(160px, 60vw, 260px); }
+    .drawer-footer__contact { font-size: clamp(9px, 5vw, 15px); }
+    .drawer-footer__copy { font-size: clamp(7px, 2vw, 14px); }
+}
+
+@media (min-width: 481px) and (max-width: 1024px) {
+    .header { height: clamp(90px, 17vw, 125px); }
+    .header__title { font-size: clamp(28px, 8vw, 48px); }
+    .header__subtitle { font-size: clamp(9px, 2vw, 14px); }
+
+    .hero { margin-top: -30px; margin-bottom: -70px; }
+    .hero__image { max-width: 75%; max-height: 52vh; }
+
+    .streaming { width: 45%; }
+    .lyrics img { width: 55%; }
+
+    .yellow-panel { padding-top: clamp(10px, 3vh, 30px); }
+
+    .social__item img { width: clamp(30px, 5vw, 48px); }
+    .social { gap: clamp(16px, 6vw, 48px); }
+
+    .about__title { font-size: clamp(52px, 12vw, 90px); }
+    .about__text { font-size: clamp(13px, 2vw, 17px); }
+    .about__bold { font-size: clamp(13px, 2vw, 17px); }
+
+    .prev-works__cover { width: 30%; }
+    .drawer-footer__logo { width: clamp(200px, 45vw, 300px); }
+}
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+    .header__title { font-size: clamp(32px, 5.5vw, 52px); }
+    .header__subtitle { font-size: clamp(10px, 1.2vw, 14px); }
+    .hero { margin-top: -35px; }
+    .hero__image { max-height: 52vh; max-width: 45%; }
+
+    .streaming { width: 18%; }
+    .lyrics img { width: 18%; }
+    .social__item img { width: clamp(32px, 9vw, 54px); }
+
+
+    .about__title { font-size: clamp(60px, 8vw, 100px); }
+    .about__text { font-size: clamp(14px, 1.4vw, 18px); }
+    .prev-works__cover { width: 22%; }
+}
+
+@media (min-width: 1441px) and (max-width: 1920px) {
+    .header__title { font-size: clamp(48px, 4vw, 64px); }
+    .header__subtitle { font-size: clamp(11px, 1vw, 15px); }
+    .hero__image { max-height: 56vh; max-width: 42%; }
+
+    .streaming { width: 22%; }
+    .lyrics img { width: 22%; }
+
+    .about__title { font-size: clamp(80px, 7vw, 110px); }
+    .about__text { font-size: clamp(15px, 1.2vw, 19px); }
+    .prev-works__cover { width: 20%; }
+    .social__item img { width: clamp(32px, 8vw, 48px); }
+}
+
+@media (min-width: 1921px) {
+    .header { height: clamp(140px, 13vh, 200px); }
+    .header__title { font-size: clamp(60px, 5vw, 90px); }
+    .header__subtitle { font-size: clamp(13px, 1vw, 18px); }
+    .hero__image { max-height: 56vh; max-width: 35%; }
+    .streaming { width: 12%; }
+    .lyrics img { width: 12%; }
+
+    .about__title { font-size: clamp(90px, 6vw, 140px); }
+    .about__text { font-size: clamp(16px, 1.1vw, 22px); }
+    .about__bold { font-size: clamp(16px, 1.1vw, 22px); }
+
+    .social__item img { width: clamp(40px, 3vw, 72px); }
+    .social { gap: clamp(40px, 5vw, 100px); }
+
+    .prev-works__cover { width: 35%; }
+    .drawer-footer__logo { width: clamp(280px, 25vw, 480px); }
+    .drawer-footer__contact { font-size: clamp(14px, 1vw, 20px); }
+    .drawer-footer__copy { font-size: clamp(10px, 0.7vw, 14px); }
+    .prev-works__label { font-size: clamp(16px, 1.2vw, 22px); }
+}
