@@ -22,7 +22,7 @@ html, body {
 .page {
     width: 100%;
     height: 100vh;
-    height: 100dvh;
+    height: 100svh;
     display: flex;
     flex-direction: column;
     background: var(--bg);
@@ -49,7 +49,7 @@ html, body {
     position: relative;
     flex-shrink: 0;
     width: 100%;
-    height: clamp(115px, 14vh, 155px);
+    height: clamp(115px, 14svh, 155px);
     overflow: hidden;
 }
 
@@ -101,7 +101,7 @@ html, body {
 .hero__image {
     width: auto;
     max-width: 55%;       /* ограничиваем ширину на десктопе */
-    max-height: 66vh;
+    max-height: 66svh;
     height: auto;
     object-fit: contain;
     display: block;
@@ -153,7 +153,7 @@ html, body {
     align-items: center;
     /* justify-content: center;  */
     justify-content: flex-start;   /* ← было center, меняем на flex-start */
-    padding-top: clamp(10px, 6vh, 45px); 
+    padding-top: clamp(10px, 6svh, 45px); 
 }
 
 .yellow-panel__wave {
@@ -349,31 +349,31 @@ html, body {
 
 
 
-.prev-works {
-    margin-top: 32px;
-    margin-left: calc(-1 * clamp(20px, 6vw, 80px));   /* ← компенсируем padding */
-    margin-right: calc(-1 * clamp(20px, 6vw, 80px));
-    width: calc(100% + 2 * clamp(20px, 6vw, 80px));   /* ← расширяем на ту же величину */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: var(--bg);
-    padding: 24px 0 32px;
-    position: relative;
-    z-index: 1;  
-    padding: clamp(50px, 10vh, 90px) 0 92px;
-}
-
 .prev-works__wave {
     display: block;
     width: calc(100% + 2 * clamp(20px, 6vw, 80px));
     margin-left: calc(-1 * clamp(20px, 6vw, 80px));
     height: clamp(40px, 8vh, 80px);
-    margin-bottom: clamp(-120px, -11vh, -50px);   /* ← наезжает вниз */
+    margin-bottom: 0;          /* ← убираем негативный margin */
     position: relative;
-    z-index: 2;
+    z-index: 3;                /* ← выше prev-works */
 }
 
+.prev-works {
+    margin-top: calc(-1 * clamp(40px, 8vh, 80px)); /* ← подъезжает под волну */
+    padding-top: clamp(50px, 8vh, 90px);           /* ← контент ниже волны */
+    /* остальные стили без изменений */
+    margin-left: calc(-1 * clamp(20px, 6vw, 80px));
+    margin-right: calc(-1 * clamp(20px, 6vw, 80px));
+    width: calc(100% + 2 * clamp(20px, 6vw, 80px));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--bg);
+    padding-bottom: 92px;
+    position: relative;
+    z-index: 1;
+}
 .prev-works__wave svg {
     width: 100%;
     height: 100%;
@@ -492,10 +492,10 @@ html, body {
     .header__subtitle { font-size: clamp(8px, 3.4vw, 22px); }
 
     .hero { margin-top: -4.5vh; margin-bottom: -60px; }
-    .hero__image { max-width: 100%; max-height: 60vh; }
+    .hero__image { max-width: 100%; max-height: 60svh; }
 
-    .streaming { width: 80vw; margin-top: 3vh; }
-    .lyrics img { width: 80vw; }
+    .streaming { width: 38vh; margin-top: 3vh; }
+    .lyrics img { width: 38vh; }
 
     .yellow-panel { 
         padding-top: clamp(8px, 4vw, 20px); 
@@ -531,7 +531,6 @@ html, body {
         padding-left: 16px; padding-right: 16px;
     }
 
-    /* .prev-works__wave { height: clamp(30px, 8vw, 50px); margin-bottom: clamp(-60px, -8vw, -30px); } */
     .prev-works { padding: clamp(40px, 15vw, 120px) 0 60px; }
     .prev-works__cover { width: 85%; }
     .prev-works__label { font-size: clamp(10px, 6vw, 18px); }
