@@ -531,7 +531,7 @@ html, body {
         padding-left: 16px; padding-right: 16px;
     }
 
-    .prev-works { padding: clamp(40px, 15vw, 120px) 0 60px; }
+    .prev-works { padding: clamp(40px, 17vw, 140px) 0 60px; }
     .prev-works__cover { width: 85%; }
     .prev-works__label { font-size: clamp(10px, 6vw, 18px); }
     .prev-works { margin-left: -16px; margin-right: -16px; width: calc(100% + 32px); }
@@ -617,4 +617,30 @@ html, body {
     .drawer-footer__contact { font-size: clamp(14px, 1vw, 20px); }
     .drawer-footer__copy { font-size: clamp(10px, 0.7vw, 14px); }
     .prev-works__label { font-size: clamp(16px, 1.2vw, 22px); }
+}
+@media (max-width: 480px) and (max-height: 700px) {
+
+    /* Уменьшаем шапку */
+    .header { height: clamp(90px, 20vw, 100px); }
+    .header__title{font-size: clamp(10px, 10vw, 40px);}
+
+    /* Фото поменьше */
+    .hero__image { max-height: 55svh; }
+    .hero { margin-bottom: -45px; }
+
+    /* Иконки стримингов и lyrics — фиксированный % вместо svh */
+    .streaming { width: 75%; margin-top: 1vh; }
+    .lyrics img { width: 75%; }
+
+    /* Желтая панель — меньше отступ снизу под шторку */
+    .yellow-panel { padding-bottom: 80px; }
+
+    /* Шторка выглядывает меньше */
+    .drawer__wave { height: 25px; }
+    .social { margin-top: 60px; gap: clamp(10px, 7vw, 28px); }
+    .social__item img { width: clamp(22px, 8vw, 34px); }
+
+    /* About не выглядывает */
+    .drawer__content { padding-top: 6svh; }
+    .about__title { font-size: clamp(40px, 15vw, 60px); }
 }
