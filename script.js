@@ -4,10 +4,13 @@ const drawer = document.getElementById('drawer');
 // Функция, которая подстраивает высоту "выглядывающей" части под твой CSS (clamp)
 function getPeekHeight() {
     const width = window.innerWidth;
-    if (width <= 480) return 95;         // Мобилки
-    if (width <= 1024) return 100;       // Планшеты
-    if (width <= 1920) return 110;       // Full HD
-    return 180;                          // 2K / 4K
+    const height = window.innerHeight;
+    
+    if (width <= 480 && height <= 700) return 70;  // ← iPhone SE
+    if (width <= 480) return 95;
+    if (width <= 1024) return 100;
+    if (width <= 1920) return 110;
+    return 180;
 }
 
 let currentY = 0;
