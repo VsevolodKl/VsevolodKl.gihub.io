@@ -135,7 +135,9 @@ html, body {
     height: auto;
     display: block;
 }
-
+.streaming a:nth-child(2) img {
+    width: 90%; /* чуть меньше остальных */
+}
 .lyrics {
     width: 100%;
     display: flex;
@@ -171,10 +173,14 @@ html, body {
 } */
 
 .lyrics img {
+    image-rendering: auto;
+    transform: translateZ(0);
     width: 22%;          /* было 25% */
     max-height: 100%;
     height: auto;
     object-fit: contain;
+    overflow: visible;
+    filter: drop-shadow(0px 6px 8px rgba(0, 0, 0, 0.45));
     display: block;
     cursor: pointer;
     transition: transform 0.2s ease;
@@ -224,7 +230,7 @@ html, body {
     display: block;
     width: 100%;
     height: clamp(40px, 8vh, 80px); /* Высота волны. Подрегулируй, если нужно больше/меньше */
-    transform: scaleY(-1); /* Тот самый трюк из старого кода, который переворачивает волну */
+    transform: scaleY(-1) translateY(-1px); /* Тот самый трюк из старого кода, который переворачивает волну */
     margin-bottom: -1px; /* Защита от белых микро-щелей между волной и фоном соцсетей */
     flex-shrink: 0;
 }
@@ -351,6 +357,7 @@ html, body {
 
 .prev-works__wave {
     display: block;
+    transform: translateY(-1px); /* сдвигает волну на 1px вниз, перекрывая щель */
     width: calc(100% + 2 * clamp(20px, 6vw, 80px));
     margin-left: calc(-1 * clamp(20px, 6vw, 80px));
     height: clamp(40px, 8vh, 80px);
@@ -416,8 +423,9 @@ html, body {
     display: block;
     width: 100%;
     height: clamp(40px, 7vh, 70px);
-    transform: scaleY(-1);
+    transform: scaleY(-1) translateY(-1px);
     margin-top: clamp(-70px, -7vh, -40px);   /* ← наезжает на prev-works */
+    margin-bottom: -2px;
     position: relative;
     z-index: 2;
 }
@@ -544,27 +552,57 @@ html, body {
 }
 
 @media (min-width: 481px) and (max-width: 1024px) {
-    .header { height: clamp(90px, 17vw, 125px); }
-    .header__title { font-size: clamp(28px, 8vw, 48px); }
-    .header__subtitle { font-size: clamp(9px, 2vw, 14px); }
+    /* Шапка */
+    .header { height: clamp(100px, 15vw, 130px); }
+    .header__title { font-size: clamp(28px, 9vw, 52px); }
+    .header__subtitle { font-size: clamp(10px, 2vw, 15px); }
 
-    .hero { margin-top: -30px; margin-bottom: -70px; }
-    .hero__image { max-width: 75%; max-height: 52vh; }
+    /* Фото */
+    .hero { margin-top: -4vh; margin-bottom: -65px; }
+    .hero__image { max-width: 70%; max-height: 62svh; }
 
-    .streaming { width: 45%; }
-    .lyrics img { width: 55%; }
+    /* Стриминг и lyrics */
+    .streaming { width: 38svh; margin-top: 1.7vh; }
+    .lyrics img { width:38svh; }
 
-    .yellow-panel { padding-top: clamp(10px, 3vh, 30px); }
+    /* Желтая панель */
+    .yellow-panel {
+        padding-top: clamp(8px, 3vw, 24px);
+        padding-bottom: 110px; /* место под шторку */
+    }
 
-    .social__item img { width: clamp(30px, 5vw, 48px); }
-    .social { gap: clamp(16px, 6vw, 48px); }
+    /* Шторка */
+    .drawer__wave { height: clamp(35px, 5vw, 60px); }
+    .social {
+        margin-top:95px;
+        gap: clamp(14px, 8vw, 55px);
+    }
+    .social__item img { width: clamp(28px, 6vw, 40px);}
 
+    /* About */
+    .drawer__content { padding: 24px 24px 0; padding-top: 7svh; }
     .about__title { font-size: clamp(52px, 12vw, 90px); }
     .about__text { font-size: clamp(13px, 2vw, 17px); }
     .about__bold { font-size: clamp(13px, 2vw, 17px); }
+    .about__source { font-size: clamp(10px, 1.5vw, 14px); }
+    .about__text, .about__bold, .about__source, .about__title {
+        padding-left: 24px; padding-right: 24px;
+    }
 
-    .prev-works__cover { width: 30%; }
-    .drawer-footer__logo { width: clamp(200px, 45vw, 300px); }
+    /* Prev works */
+    .prev-works { 
+        padding: clamp(40px, 10vw, 80px) 0 70px;
+        margin-left: -24px; margin-right: -24px;
+        width: calc(100% + 48px);
+    }
+    .prev-works__cover { width: 60%; }
+    .prev-works__label { font-size: clamp(12px, 2vw, 16px); }
+
+    /* Footer */
+    .drawer-footer { margin-left: -24px; width: calc(100% + 48px); }
+    .drawer-footer__logo { width: clamp(180px, 45vw, 280px); }
+    .drawer-footer__contact { font-size: clamp(10px, 2vw, 14px); }
+    .drawer-footer__copy { font-size: clamp(8px, 1.2vw, 12px); }
 }
 
 @media (min-width: 1025px) and (max-width: 1440px) {
@@ -602,8 +640,8 @@ html, body {
     .header__title { font-size: clamp(60px, 5vw, 90px); }
     .header__subtitle { font-size: clamp(13px, 1vw, 18px); }
     .hero__image { max-height: 56vh; max-width: 35%; }
-    .streaming { width: 12%; }
-    .lyrics img { width: 12%; }
+    .streaming { width: 38Svh; }
+    .lyrics img { width: 38svh; }
 
     .about__title { font-size: clamp(90px, 6vw, 140px); }
     .about__text { font-size: clamp(16px, 1.1vw, 22px); }
