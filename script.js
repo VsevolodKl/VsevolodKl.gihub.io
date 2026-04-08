@@ -8,7 +8,7 @@ function getPeekHeight() {
     
     if (width <= 480 && height <= 700) return 70;  // ← iPhone SE
     if (width <= 480) return 85;
-    if (width <= 1024) return 100;
+    if (width <= 1024) return 105;
     if (width <= 1920) return 110;
     return 180;
 }
