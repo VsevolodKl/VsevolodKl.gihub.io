@@ -199,4 +199,13 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 1200);
         }
     }, 6500);
+    const minWaitTime = 4500;
+    const startTime = Date.now();
+
+    // Проверяем: если всё уже загрузилось (событие load сработало), 
+    // считаем время и выключаем лоадер.
+    const timeElapsed = Date.now() - startTime;
+    const remainingTime = Math.max(0, minWaitTime - timeElapsed);
+
+    setTimeout(finishLoading, remainingTime);
 });
