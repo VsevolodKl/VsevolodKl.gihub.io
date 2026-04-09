@@ -6,6 +6,7 @@
     --color-dark:   #50002C;
     --color-text:   #3B2800;
     --color-white:  #FFFFFF;
+   
 }
 
 * {
@@ -27,6 +28,14 @@ html, body {
     flex-direction: column;
     background: var(--bg);
     overflow: hidden;
+    
+    /* НОВАЯ СТРОЧКА: Блокируем любые нажатия по умолчанию */
+    pointer-events: none; 
+}
+
+/* Класс, который вернет управление после загрузки */
+.page.is-loaded {
+    pointer-events: auto;
 }
 
 /* Общие настройки для всех волн */
@@ -51,6 +60,17 @@ html, body {
     width: 100%;
     height: clamp(115px, 14svh, 155px);
     overflow: hidden;
+    transform: translateY(-100%);
+    opacity: 0;
+    
+    /* Плавность появления (используем такой же эффект, как у других элементов) */
+    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.8s ease;
+}
+
+
+.header--visible {
+    transform: translateY(0) !important;
+    opacity: 1 !important;
 }
 
 .header__content {
@@ -105,7 +125,8 @@ html, body {
     height: auto;
     object-fit: contain;
     display: block;
-    transform: scale(1, 1);
+    transform: scale(0.85);
+    opacity: 0;
 }
 .streaming {
     display: flex;
@@ -216,7 +237,7 @@ html, body {
     height: calc(100dvh + 110px);
     background: transparent;
     transform: translateY(calc(100% - clamp(80px, 12vh, 120px)));
-    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    /* transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); */
     z-index: 10;
     display: flex;
     flex-direction: column;
@@ -493,7 +514,105 @@ html, body {
         transform: translate(-50%, -2px); 
     }
 }
+/* =========================================
+   LOADING SCREEN
+   ========================================= */
+   #loading-screen {
+    --boat-height: clamp(150px, 100vh, 1920px); 
+    position: fixed;
+    inset: 0;
+    /* background-color: var(--color-dark); */
+    z-index: 10000;
+    /* Центрируем всё строго по центру */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1200ms cubic-bezier(0.5, 1, 0.9, 1);
+    background-color: transparent !important;
+    overflow: hidden;
+}
 
+#loader-boat, #loader-text, #loader-headment {
+    position: absolute; /* Теперь они не толкают друг друга */
+}
+
+#loader-boat {
+    /* Создаем переменную высоты, чтобы использовать её в расчетах ниже */
+    
+    
+    width: auto;
+    height: var(--boat-height);
+    position: absolute;
+    opacity: 0;
+    transform: translateY(0);
+    transition: opacity 1s ease, transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+#loader-text {
+    font-size: 1.8svh;
+    position: absolute;
+    /* Расчет: (Половина высоты лодки) + (Желаемый зазор, например 20px) */
+    /* Теперь, как бы ни менялась высота лодки через clamp, текст всегда будет под ней */
+    margin-top: calc(var(--boat-height)/2 - 17.5svh);
+    
+    margin-left: 15svh; /* Смещение вправо для наклона */
+    font-family: 'Afacad', sans-serif;
+    color: var(--bg);
+    opacity: 0;
+    transform: rotate(-19deg);
+    white-space: nowrap;
+    transition: opacity 0.8s ease, transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#loader-headment {
+    width: clamp(200px, 50vw, 350px);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease, transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gooey-container {
+    position: absolute;
+    inset: -105px;
+
+    filter: url('#goo');
+    pointer-events: none;
+}
+
+.gooey-bg {
+    position: absolute;
+    inset: 100px;
+    background-color: var(--color-dark);
+    transition: transform 1200ms cubic-bezier(0.5, 1, 0.9, 1);
+}
+
+.drip {
+    position: absolute;
+    background-color: var(--color-dark);
+    border-radius: 50%;
+    /* Пузырьки «сидят» на нижней границе фона */
+    top: 60px; 
+    transition: transform 1200ms cubic-bezier(0.5, 1, 0.9, 1);
+}
+
+/* Настройка размеров и позиций пузырьков */
+.drip-1 { width: 220px; height: 220px; left: -2%;  transition-delay: 40ms; }
+.drip-2 { width: 180px; height: 180px; left: 15%;  transition-delay: 0ms; }
+.drip-3 { width: 260px; height: 260px; left: 30%;  transition-delay: 110ms; }
+.drip-4 { width: 190px; height: 190px; left: 50%;  transition-delay: 20ms; }
+.drip-5 { width: 240px; height: 240px; left: 65%;  transition-delay: 80ms; }
+.drip-6 { width: 200px; height: 200px; left: 85%;  transition-delay: 50ms; }
+.drip-7 { width: 150px; height: 150px; left: 42%;  transition-delay: 150ms; }
+
+/* Анимация */
+#loading-screen.is-sliding-down .gooey-bg,
+#loading-screen.is-sliding-down .drip {
+    transform: translateY(130vh);
+}
+
+#loading-screen.is-sliding-down .loader-content {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
 @media (max-width: 480px) {
     .header { height: clamp(90px, 24vw, 130px); }
     .header__title { font-size: clamp(26px, 12vw, 42px); }
@@ -502,7 +621,7 @@ html, body {
     .hero { margin-top: -4.5vh; margin-bottom: -60px; }
     .hero__image { max-width: 100%; max-height: 60svh; }
 
-    .streaming { width: 38svh; margin-top: 3vh; }
+    .streaming { width: 38svh; margin-top: 3svh; }
     .lyrics img { width: 38svh; }
 
     .yellow-panel { 
@@ -611,8 +730,8 @@ html, body {
     .hero { margin-top: -35px; }
     .hero__image { max-height: 52vh; max-width: 45%; }
 
-    .streaming { width: 18%; }
-    .lyrics img { width: 18%; }
+    .streaming { width: 38svh; }
+    .lyrics img { width: 38svh; }
     .social__item img { width: clamp(32px, 9vw, 54px); }
 
 
@@ -635,26 +754,68 @@ html, body {
     .social__item img { width: clamp(32px, 8vw, 48px); }
 }
 
-@media (min-width: 1921px) {
-    .header { height: clamp(140px, 13vh, 200px); }
+@media (min-width: 1921px) and (max-width: 2559px) {
+    .header { height: clamp(140px, 12vh, 180px); }
     .header__title { font-size: clamp(60px, 5vw, 90px); }
     .header__subtitle { font-size: clamp(13px, 1vw, 18px); }
+    
     .hero__image { max-height: 56vh; max-width: 35%; }
-    .streaming { width: 38Svh; }
-    .lyrics img { width: 38svh; }
+    
+    /* Используем %, чтобы кнопки не были гигантскими */
+    .streaming { width: 18%; margin-top: 2vh; }
+    .lyrics img { width: 18%; }
 
-    .about__title { font-size: clamp(90px, 6vw, 140px); }
-    .about__text { font-size: clamp(16px, 1.1vw, 22px); }
-    .about__bold { font-size: clamp(16px, 1.1vw, 22px); }
+    /* Расширяем текстовый контейнер, чтобы он не казался узким */
+    .about__title { font-size: clamp(100px, 6vw, 140px); max-width: 1000px; }
+    .about__text, .about__bold { font-size: clamp(18px, 1.2vw, 24px); max-width: 1000px; }
+    .about__source { font-size: clamp(14px, 1vw, 18px); max-width: 1000px; }
 
-    .social__item img { width: clamp(40px, 3vw, 72px); }
-    .social { gap: clamp(40px, 5vw, 100px); }
+    .drawer__wave { height: clamp(50px, 6vh, 80px); }
+    .social { gap: clamp(50px, 4vw, 100px); margin-top: 120px; }
+    .social__item img { width: clamp(40px, 3vw, 60px); }
 
-    .prev-works__cover { width: 35%; }
-    .drawer-footer__logo { width: clamp(280px, 25vw, 480px); }
+    /* Обложка альбома не должна занимать пол-экрана */
+    .prev-works__cover { width: 16%; }
+    .prev-works__label { font-size: clamp(16px, 1.2vw, 22px); }
+
+    .drawer-footer__logo { width: clamp(300px, 20vw, 480px); }
     .drawer-footer__contact { font-size: clamp(14px, 1vw, 20px); }
     .drawer-footer__copy { font-size: clamp(10px, 0.7vw, 14px); }
-    .prev-works__label { font-size: clamp(16px, 1.2vw, 22px); }
+}
+
+/* =========================================
+   4K МОНИТОРЫ И ТВ (от 2560px и выше)
+   ========================================= */
+@media (min-width: 2560px) {
+    .header { height: clamp(180px, 14vh, 260px); }
+    .header__title { font-size: clamp(90px, 4vw, 150px); }
+    .header__subtitle { font-size: clamp(18px, 0.8vw, 28px); }
+
+    .hero__image { max-height: 58vh; max-width: 30%; }
+
+    .streaming { width: 36svh; margin-top: 2vh; }
+    .lyrics img { width: 36svh; }
+
+    /* Желтая волна должна быть пропорциональна экрану */
+    .yellow-panel__wave { height: clamp(80px, 8vh, 140px); }
+
+    /* Растягиваем текст для огромного разрешения */
+    .about__title { font-size: clamp(140px, 5vw, 220px); max-width: 1600px; }
+    .about__text, .about__bold { font-size: clamp(24px, 1vw, 36px); max-width: 1400px; line-height: 1.8; }
+    .about__source { font-size: clamp(18px, 0.8vw, 24px); max-width: 1400px; margin-bottom: 40px; }
+
+    .drawer__wave { height: clamp(80px, 6vh, 120px); }
+    .social { gap: clamp(80px, 4vw, 150px); margin-top: 165px; }
+    .social__item img { width: clamp(60px, 2vw, 90px); }
+
+    .prev-works { padding: clamp(80px, 10vw, 150px) 0 100px; }
+    .prev-works__cover { width: 12%; max-width: 800px; }
+    .prev-works__label { font-size: clamp(22px, 1vw, 32px); margin-bottom: 24px; }
+
+    .drawer-footer__wave { height: clamp(60px, 7vh, 120px); }
+    .drawer-footer__logo { width: clamp(480px, 15vw, 700px); }
+    .drawer-footer__contact { font-size: clamp(20px, 1vw, 30px); }
+    .drawer-footer__copy { font-size: clamp(14px, 0.7vw, 20px); }
 }
 @media (max-width: 480px) and (max-height: 700px) {
 
@@ -667,7 +828,7 @@ html, body {
     .hero { margin-bottom: -45px; }
 
     /* Иконки стримингов и lyrics — фиксированный % вместо svh */
-    .streaming { width: 75%; margin-top: 1vh; }
+    .streaming { width: 75%; margin-top: 2svh; }
     .lyrics img { width: 75%; }
 
     /* Желтая панель — меньше отступ снизу под шторку */
