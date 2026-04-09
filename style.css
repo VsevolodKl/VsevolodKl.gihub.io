@@ -234,7 +234,7 @@ html, body {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: calc(100dvh + 110px);
+    height: calc(100dvh);
     background: transparent;
     transform: translateY(calc(100% - clamp(80px, 12vh, 120px)));
     /* transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); */
