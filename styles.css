@@ -161,6 +161,7 @@ html, body {
 }
 
 .wave-wrap svg {
+transform: translateY(-1px);
   display: block;
   width: 100%;
   height: 100%;
