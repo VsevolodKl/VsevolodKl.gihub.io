@@ -1,56 +1,37 @@
 const drawer = document.getElementById('drawer');
 let canMoveDrawer = false;
-// Функция, которая подстраивает высоту "выглядывающей" части под твой CSS (clamp)
+let currentY = 0;
+let targetY = 0;
+let startY = 0;
+let startDrawerY = 0;
+
 function getPeekHeight() {
     const width = window.innerWidth;
     const height = window.innerHeight;
-    
-    if (width <= 480 && height <= 700) return 70;  // iPhone SE
+    if (width <= 480 && height <= 700) return 70;
     if (width <= 480) return 85;
     if (width <= 1024) return 105;
     if (width <= 1920) return 110;
-    
-    // Новые значения для 2K и 4K
-    if (width <= 2560) return 130; // Для 2K мониторов
-    return 180; // Для 4K мониторов (соцсети крупные, нужно место)
+    if (width <= 2560) return 130;
+    return 180;
 }
 
-let currentY = 0;
-let targetY = 0;
+function getMin() { return drawer.offsetHeight - drawer.scrollHeight; }
+function getMax() { return drawer.offsetHeight - getPeekHeight(); }
 
-function getMin() {
-    return drawer.offsetHeight - drawer.scrollHeight;
-}
-
-function getMax() {
-    return drawer.offsetHeight - getPeekHeight();
-}
-
-// Задаем корректное стартовое положение при загрузке
+// ТВОЯ ОРИГИНАЛЬНАЯ АНИМАЦИЯ ПОДПРЫГИВАНИЯ
 function initDrawer() {
-    // Получаем точку, где шторка должна просто "выглядывать"
     const peekPos = getMax();
-    
-    // Сначала ставим её на место без анимаций
     currentY = peekPos;
     targetY = peekPos;
     drawer.style.transition = 'none';
     drawer.style.transform = `translateY(${peekPos}px)`;
 
-    // Через миг даем "пинок" вверх
     setTimeout(() => {
-        // Включаем мягкую пружинистую анимацию
         drawer.style.transition = 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
-        
-        // Поднимаем на 50px выше нормы
         drawer.style.transform = `translateY(${peekPos - 50}px)`;
-
-        // И через полсекунды возвращаем обратно
         setTimeout(() => {
             drawer.style.transform = `translateY(${peekPos}px)`;
-            
-            // Важно: после завершения прыжка выключаем transition, 
-            // чтобы основной скролл не тормозил и не дергался
             setTimeout(() => {
                 drawer.style.transition = 'none';
             }, 600);
@@ -58,154 +39,102 @@ function initDrawer() {
     }, 100);
 }
 
-// initDrawer();
-
+// Управление скроллом (мышь)
 window.addEventListener('wheel', e => {
-    if (!canMoveDrawer) return; //
+    if (!canMoveDrawer) return;
     targetY -= e.deltaY * 0.8;
     targetY = Math.max(getMin(), Math.min(getMax(), targetY));
-    
     drawer.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
     drawer.style.transform = `translateY(${targetY}px)`;
     currentY = targetY;
 }, { passive: true });
 
-let startY = 0;
-let startDrawerY = 0;
-
+// Тач-события
 drawer.addEventListener('touchstart', e => {
-    if (!canMoveDrawer) return; // Если нельзя — ничего не делаем
+    if (!canMoveDrawer) return;
     startY = e.touches[0].clientY;
     startDrawerY = currentY;
     drawer.style.transition = 'none';
 });
 
 drawer.addEventListener('touchmove', e => {
-    if (!canMoveDrawer) return; // Если нельзя — ничего не делаем
+    if (!canMoveDrawer) return;
     const delta = e.touches[0].clientY - startY;
-    const y = Math.max(getMin(), Math.min(getMax(), startDrawerY + delta));
-    
-    currentY = y;
-    drawer.style.transform = `translateY(${y}px)`;
+    currentY = Math.max(getMin(), Math.min(getMax(), startDrawerY + delta));
+    drawer.style.transform = `translateY(${currentY}px)`;
 }, { passive: true });
 
-drawer.addEventListener('touchend', e => {
-    targetY = currentY;
-});
+drawer.addEventListener('touchend', () => { targetY = currentY; });
 
 window.addEventListener('resize', () => {
     currentY = Math.max(getMin(), Math.min(getMax(), currentY));
     targetY = currentY;
     drawer.style.transform = `translateY(${currentY}px)`;
 });
-window.addEventListener('resize', () => {
-    currentY = Math.max(getMin(), Math.min(getMax(), currentY));
-    targetY = currentY;
-    drawer.style.transform = `translateY(${currentY}px)`;
-});
 
-document.addEventListener("DOMContentLoaded", () => {
+// --- ГЛАВНЫЙ БЛОК: ЖДЕМ ПОЛНУЮ ЗАГРУЗКУ (Картинки + Стили) ---
+window.addEventListener('load', () => {
     const loader = document.getElementById('loading-screen');
     const boat = document.getElementById('loader-boat');
     const text = document.getElementById('loader-text');
     const dots = document.getElementById('loader-dots');
     const headment = document.getElementById('loader-headment');
-
-    // --- Начальные состояния для анимаций страницы ---
     const heroImage = document.querySelector('.hero__image');
     const socialItems = document.querySelectorAll('.social__item');
 
-    // Соцсети: сразу ставим opacity 0, transition — без анимации
-    socialItems.forEach(item => {
-        item.style.transition = 'none';
-        item.style.opacity = '0';
-    });
+    // Скрываем соцсети до начала анимации
+    socialItems.forEach(item => { item.style.opacity = '0'; });
 
-    // 1. Плавное появление кораблика
-    setTimeout(() => {
-        boat.style.opacity = "1";
-    }, 300);
+    // 1. Появление кораблика и текста (тайминги из твоего файла)
+    setTimeout(() => { boat.style.opacity = "1"; }, 300);
+    setTimeout(() => { text.style.opacity = "1"; }, 1500);
 
-    // 2. Через 1.5 секунды появляется текст
-    setTimeout(() => {
-        text.style.opacity = "1";
-    }, 1500);
-
-    // Анимация точек
     let dotState = 0;
-    let forward = true;
     const dotInterval = setInterval(() => {
-        if (forward) {
-            dotState++;
-            if (dotState >= 3) forward = false;
-        } else {
-            dotState--;
-            if (dotState <= 0) forward = true;
-        }
+        dotState = (dotState + 1) % 4;
         dots.innerText = ".".repeat(dotState);
     }, 400);
 
-    // 3. Кораблик и текст летят вверх и исчезают, появляется Headment
+    // 2. Улетание лого и надпись Headment (через 4.5 сек)
     setTimeout(() => {
         clearInterval(dotInterval);
-        
-        boat.style.transform = "translateY(-80px)";
-        boat.style.opacity = "0";
-        
-        text.style.transform = "translateY(-80px) rotate(7deg)";
-        text.style.opacity = "0";
-        
-        headment.style.opacity = "1";
-        headment.style.transform = "translateY(0)";
-    }, 4500);
+        boat.style.transform = "translateY(-80px)"; boat.style.opacity = "0";
+        text.style.transform = "translateY(-80px) rotate(7deg)"; text.style.opacity = "0";
+        headment.style.opacity = "1"; headment.style.transform = "translateY(0)";
 
-    // 4. Убираем весь экран загрузки
-    setTimeout(() => {
-        const loader = document.getElementById('loading-screen');
-        if (loader) {
-            loader.classList.add('is-sliding-down');
-
-            // --- Герой растёт ОДНОВРЕМЕННО с опусканием фона ---
-            if (heroImage) {
-                heroImage.style.transition = 'transform 1.1s cubic-bezier(0.34, 1.4, 0.64, 1), opacity 0.8s ease';
-                heroImage.style.transform = 'scale(1)';
-                heroImage.style.opacity = '1';
-            }
-
-            // После того как фон уехал — показываем header и соцсети
-            setTimeout(() => {
-                loader.style.display = "none";
-                document.getElementById('page').classList.add('is-loaded');
-                // canMoveDrawer = true;
-                const header = document.querySelector('.header');
-                if (header) {
-                    header.classList.add('header--visible');
+        // 3. Финальное убирание экрана загрузки (через 2 секунды после Headment)
+        setTimeout(() => {
+            if (loader) {
+                loader.classList.add('is-sliding-down');
+                
+                if (heroImage) {
+                    heroImage.style.transition = 'transform 1.1s cubic-bezier(0.34, 1.4, 0.64, 1), opacity 0.8s ease';
+                    heroImage.style.transform = 'scale(1)'; heroImage.style.opacity = '1';
                 }
 
-                // --- Соцсети появляются после ---
-                socialItems.forEach((item, index) => {
-                    setTimeout(() => {
-                        item.style.transition = 'opacity 0.5s ease';
-                        item.style.opacity = '1';
-                    }, index * 80);
-                });
                 setTimeout(() => {
-                    canMoveDrawer = true;
-                    if (typeof initDrawer === 'function') {
-                        initDrawer();
+                    loader.style.display = "none";
+                    document.getElementById('page').classList.add('is-loaded');
+                    if (document.querySelector('.header')) {
+                        document.querySelector('.header').classList.add('header--visible');
                     }
-                }, 800); // 500мс = полсекунды задержки перед появлением шторки
-                // ===================================
-            }, 1200);
-        }
-    }, 6500);
-    const minWaitTime = 4500;
-    const startTime = Date.now();
 
-    // Проверяем: если всё уже загрузилось (событие load сработало), 
-    // считаем время и выключаем лоадер.
-    const timeElapsed = Date.now() - startTime;
-    const remainingTime = Math.max(0, minWaitTime - timeElapsed);
+                    // Показываем соцсети по очереди
+                    socialItems.forEach((item, index) => {
+                        setTimeout(() => {
+                            item.style.transition = 'opacity 0.5s ease';
+                            item.style.opacity = '1';
+                        }, index * 80);
+                    });
 
-    setTimeout(finishLoading, remainingTime);
+                    // ЧЕРЕЗ 0.5 СЕКУНДЫ ЗАПУСКАЕМ ТВОЮ РОДНУЮ АНИМАЦИЮ
+                    setTimeout(() => {
+                        canMoveDrawer = true;
+                        initDrawer();
+                    }, 500);
+
+                }, 1200);
+            }
+        }, 2000); 
+    }, 4500);
 });
