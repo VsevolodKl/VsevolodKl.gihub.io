@@ -648,7 +648,7 @@ html, body {
         margin-top: 0px;
     }
     .social__item img {
-        width: clamp(24px, 9vw, 40px);
+        width: clamp(24px, 9vw, 34px);
     }
     .drawer__content { padding: 16px 16px 0; padding-top: 8vh; }
     .about__title { font-size: clamp(48px, 18vw, 80px); }
