@@ -197,7 +197,6 @@ html, body {
     image-rendering: auto;
     transform: translateZ(0);
     width: 22%;          /* было 25% */
-    max-height: 100%;
     height: auto;
     object-fit: contain;
     overflow: visible;
@@ -621,8 +620,10 @@ html, body {
     .hero { margin-top: -4.5vh; margin-bottom: -60px; }
     .hero__image { max-width: 100%; max-height: 60svh; }
 
-    .streaming { width: 38svh; margin-top: 3svh; }
-    .lyrics img { width: 38svh; }
+    .streaming {width: 38vh; 
+        width: 38svh; margin-top: 3svh; }
+    .lyrics img { width: 38vh;
+        width: 38svh; }
 
     .yellow-panel { 
         padding-top: clamp(8px, 4vw, 20px); 
