@@ -9,6 +9,33 @@
     <link rel="preconnect" href="https://fonts.googleapis.com/css2?family=Afacad:wght@400;700&display=swap" crossorigin>
 </head>
 <body>
+    <svg style="visibility: hidden; position: absolute;" width="0" height="0">
+        <defs>
+            <filter id="goo">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur" />
+                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9" />
+            </filter>
+        </defs>
+    </svg>
+    
+    <div id="loading-screen">
+        <div class="gooey-container">
+            <div class="gooey-bg"></div>
+            <div class="drip drip-1"></div>
+            <div class="drip drip-2"></div>
+            <div class="drip drip-3"></div>
+            <div class="drip drip-4"></div>
+            <div class="drip drip-5"></div>
+            <div class="drip drip-6"></div>
+            <div class="drip drip-7"></div>
+        </div>
+    
+        <div class="loader-content" style="position: relative; z-index: 10; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+            <img id="loader-boat" src="MainMedia/Fixed/PRAYING LOGO.svg" alt="Boat">
+            <p id="loader-text">TO LOAD THE PAGE<span id="loader-dots"></span></p>
+            <img id="loader-headment" src="MainMedia/Fixed/HEADMENT.svg" alt="Headment">
+        </div>
+    </div>
     <div class="page" id="page">
         <header class="header">
             <svg class="header__wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 393 120" preserveAspectRatio="none">
@@ -82,6 +109,7 @@
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H393V45C378 58 362 65 345 60C322 54 318 18 298 10C274 1 260 35 238 34C215 33 203 12 180 8C155 3 138 48 112 52C88 56 76 22 55 14C35 7 18 28 0 20V0Z" fill="#50002C"/>
                 </svg>
                 <div class="prev-works">
+                    
                     <p class="prev-works__label">FROM PREVIOUS WORKS: <strong>THE POINT</strong> (2025)</p>
                     <img class="prev-works__cover" src="MainMedia/Moving/THE POINTL.png" alt="The Point Album">
                 </div>
@@ -101,3 +129,5 @@
     <script src="script.js"></script>
 </body>
 </html>
+
+praying.html
