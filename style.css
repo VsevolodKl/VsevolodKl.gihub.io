@@ -282,7 +282,7 @@ html, body {
 .drawer__content {
     flex: 1;
     overflow-y: visible;
-    padding: clamp(12px, 2vw, 40px);
+    padding: clamp(12px, 10vw, 80px);
     scrollbar-width: none;
     background: var(--color-dark); /* Красим блок с текстом About */
     flex-grow: 1;
@@ -660,7 +660,7 @@ html, body {
     .social__item img {
         width: clamp(24px, 9vw, 34px);
     }
-    .drawer__content { padding: 16px 16px 0; padding-top: 8vh; }
+    .drawer__content { padding: 16px 16px 0; padding-top: 13vh; }
     .about__title { font-size: clamp(48px, 18vw, 80px); }
     .about__text { font-size: clamp(12px, 3.5vw, 16px); }
     .about__bold { font-size: clamp(12px, 3.5vw, 16px); }
