@@ -93,7 +93,7 @@ window.addEventListener('load', () => {
     const socialItems = document.querySelectorAll('.social__item');
     socialItems.forEach(item => { item.style.opacity = '0'; });
 
-    const minDelay = 3200;
+    const minDelay = 2500;
     const elapsed = performance.now();
     const wait = Math.max(0, minDelay - elapsed);
 
