@@ -233,15 +233,6 @@
     /* margin-bottom: 48px; */
     text-align: left;
   }
-  #subtittle{
-    font-size: 70px;
-    font-family: var(--f-head);
-    color: var(--ink);
-    line-height: 0.9;
-    letter-spacing: 0.02em;
-    margin-bottom: 48px;
-    text-align: left;
-  }
   .stream-list {
     list-style: none;
     display: flex;
@@ -313,9 +304,6 @@
     .stream-name  { font-size: 16px; min-width: 110px; }
     .stream-link  { font-size: 11px; }
     .stream-item  { gap: 12px; padding: 14px 0; }
-    #subtittle{
-        font-size: (52px, 11vw, 60px); margin-bottom: 32px; 
-      }
   }
   
   /* ═══════════════════════════════════════════
