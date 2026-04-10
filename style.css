@@ -133,7 +133,7 @@ html, body {
     justify-content: center;
     align-items: center;
     gap: 5%;
-    width: 22%;
+    width: 20%;
     margin: 0 auto;
 
     flex-shrink: 0;
@@ -195,7 +195,7 @@ html, body {
 
 .lyrics a {
     display: block;        /* Чтобы работала ширина и отступы */
-    width: 22%;            /* Базовая ширина для ПК */
+    width: 20%;            /* Базовая ширина для ПК */
     margin: 0 auto;        /* Центрируем */
     text-decoration: none;
     transition: transform 0.2s ease;
@@ -630,10 +630,10 @@ html, body {
     .hero { margin-top: -4.5vh; margin-bottom: -60px; }
     .hero__image { max-width: 100%; max-height: 60svh; }
 
-    .streaming {width: 38vh; 
-        width: 38svh; margin-top: 3.5svh; }
-    .lyrics a { width: 38vh;
-        width: 38svh; }
+    .streaming {width: 37vh; 
+        width: 37svh; margin-top: 3.5svh; }
+    .lyrics a { width: 37vh;
+        width: 37svh; }
 
     .yellow-panel { 
         padding-top: clamp(8px, 4vw, 20px); 
@@ -756,8 +756,8 @@ html, body {
     .header__subtitle { font-size: clamp(11px, 1vw, 15px); }
     .hero__image { max-height: 56vh; max-width: 42%; }
 
-    .streaming { width: 22%; }
-    .lyrics a { width: 22%; }
+    .streaming { width: 21%; }
+    .lyrics a { width: 21%; }
 
     .about__title { font-size: clamp(80px, 7vw, 110px); }
     .about__text { font-size: clamp(15px, 1.2vw, 19px); }
