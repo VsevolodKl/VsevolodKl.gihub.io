@@ -73,68 +73,59 @@ window.addEventListener('resize', () => {
 });
 
 // --- ГЛАВНЫЙ БЛОК: ЖДЕМ ПОЛНУЮ ЗАГРУЗКУ (Картинки + Стили) ---
+const loader = document.getElementById('loading-screen');
+const boat = document.getElementById('loader-boat');
+const text = document.getElementById('loader-text');
+const dots = document.getElementById('loader-dots');
+const headment = document.getElementById('loader-headment');
+
+setTimeout(() => { boat.style.opacity = "1"; }, 200);
+setTimeout(() => { text.style.opacity = "1"; }, 800);
+
+let dotState = 0;
+const dotInterval = setInterval(() => {
+    dotState = (dotState + 1) % 4;
+    dots.innerText = ".".repeat(dotState);
+}, 400);
+
 window.addEventListener('load', () => {
-    const loader = document.getElementById('loading-screen');
-    const boat = document.getElementById('loader-boat');
-    const text = document.getElementById('loader-text');
-    const dots = document.getElementById('loader-dots');
-    const headment = document.getElementById('loader-headment');
     const heroImage = document.querySelector('.hero__image');
     const socialItems = document.querySelectorAll('.social__item');
-
-    // Скрываем соцсети до начала анимации
     socialItems.forEach(item => { item.style.opacity = '0'; });
 
-    // 1. Появление кораблика и текста (тайминги из твоего файла)
-    setTimeout(() => { boat.style.opacity = "1"; }, 300);
-    setTimeout(() => { text.style.opacity = "1"; }, 1500);
+    const minDelay = 3200;
+    const elapsed = performance.now();
+    const wait = Math.max(0, minDelay - elapsed);
 
-    let dotState = 0;
-    const dotInterval = setInterval(() => {
-        dotState = (dotState + 1) % 4;
-        dots.innerText = ".".repeat(dotState);
-    }, 400);
-
-    // 2. Улетание лого и надпись Headment (через 4.5 сек)
     setTimeout(() => {
         clearInterval(dotInterval);
         boat.style.transform = "translateY(-80px)"; boat.style.opacity = "0";
         text.style.transform = "translateY(-80px) rotate(7deg)"; text.style.opacity = "0";
         headment.style.opacity = "1"; headment.style.transform = "translateY(0)";
 
-        // 3. Финальное убирание экрана загрузки (через 2 секунды после Headment)
         setTimeout(() => {
-            if (loader) {
-                loader.classList.add('is-sliding-down');
-                
-                if (heroImage) {
-                    heroImage.style.transition = 'transform 1.1s cubic-bezier(0.34, 1.4, 0.64, 1), opacity 0.8s ease';
-                    heroImage.style.transform = 'scale(1)'; heroImage.style.opacity = '1';
-                }
-
-                setTimeout(() => {
-                    loader.style.display = "none";
-                    document.getElementById('page').classList.add('is-loaded');
-                    if (document.querySelector('.header')) {
-                        document.querySelector('.header').classList.add('header--visible');
-                    }
-
-                    // Показываем соцсети по очереди
-                    socialItems.forEach((item, index) => {
-                        setTimeout(() => {
-                            item.style.transition = 'opacity 0.5s ease';
-                            item.style.opacity = '1';
-                        }, index * 80);
-                    });
-
-                    // ЧЕРЕЗ 0.5 СЕКУНДЫ ЗАПУСКАЕМ ТВОЮ РОДНУЮ АНИМАЦИЮ
-                    setTimeout(() => {
-                        canMoveDrawer = true;
-                        initDrawer();
-                    }, 500);
-
-                }, 1200);
+            loader.classList.add('is-sliding-down');
+            if (heroImage) {
+                heroImage.style.transition = 'transform 1.1s cubic-bezier(0.34, 1.4, 0.64, 1), opacity 0.8s ease';
+                heroImage.style.transform = 'scale(1)'; heroImage.style.opacity = '1';
             }
-        }, 2000); 
-    }, 4500);
+            setTimeout(() => {
+                loader.style.display = "none";
+                document.getElementById('page').classList.add('is-loaded');
+                if (document.querySelector('.header')) {
+                    document.querySelector('.header').classList.add('header--visible');
+                }
+                socialItems.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.style.transition = 'opacity 0.5s ease';
+                        item.style.opacity = '1';
+                    }, index * 80);
+                });
+                setTimeout(() => {
+                    canMoveDrawer = true;
+                    initDrawer();
+                }, 500);
+            }, 1200);
+        }, 2000);
+    }, wait);
 });
