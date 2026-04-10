@@ -631,7 +631,7 @@ html, body {
     .hero__image { max-width: 100%; max-height: 60svh; }
 
     .streaming {width: 37vh; 
-        width: 37svh; margin-top: 3.5svh; }
+        width: 37svh; margin-top: 4svh; }
     .lyrics a { width: 37vh;
         width: 37svh; }
 
@@ -658,7 +658,7 @@ html, body {
         margin-top: 0px;
     }
     .social__item img {
-        width: clamp(21px, 9vw, 29px);
+        width: clamp(21px, 10vw, 35px);
     }
     .drawer__content { padding: 16px 16px 0; padding-top: 13vh; }
     .about__title { font-size: clamp(48px, 18vw, 80px); }
