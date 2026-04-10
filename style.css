@@ -193,21 +193,26 @@ html, body {
     min-height: 0;
 } */
 
-.lyrics img {
-    image-rendering: auto;
-    transform: translateZ(0);
-    width: 22%;          /* было 25% */
-    height: auto;
-    object-fit: contain;
-    overflow: visible;
-    filter: drop-shadow(0px 6px 8px rgba(0, 0, 0, 0.45));
-    display: block;
-    cursor: pointer;
+.lyrics a {
+    display: block;        /* Чтобы работала ширина и отступы */
+    width: 22%;            /* Базовая ширина для ПК */
+    margin: 0 auto;        /* Центрируем */
+    text-decoration: none;
     transition: transform 0.2s ease;
 }
 
-.lyrics a {
-    display: contents;
+/* Шаг 2b: Обновляем базовые стили картинки внутри ссылки */
+.lyrics a img {
+    display: block;       /* Убираем нижний отступ, который есть у inline элементов */
+    width: 100% !important; /* !important здесь гарантирует, что она не сожмется */
+    height: auto;
+    /* Твои старые стили, которые нужно оставить: */
+    image-rendering: auto;
+    transform: translateZ(0);
+    overflow: visible;
+    filter: drop-shadow(0px 6px 8px rgba(0, 0, 0, 0.45));
+    cursor: pointer;
+    transition: transform 0.2s ease;
 }
 
 .lyrics img:hover {
@@ -622,7 +627,7 @@ html, body {
 
     .streaming {width: 38vh; 
         width: 38svh; margin-top: 3svh; }
-    .lyrics img { width: 38vh;
+    .lyrics a { width: 38vh;
         width: 38svh; }
 
     .yellow-panel { 
@@ -683,7 +688,7 @@ html, body {
 
     /* Стриминг и lyrics */
     .streaming { width: 38svh; margin-top: 1.7vh; }
-    .lyrics img { width:38svh; }
+    .lyrics a { width:38svh; }
 
     /* Желтая панель */
     .yellow-panel {
@@ -732,7 +737,7 @@ html, body {
     .hero__image { max-height: 52vh; max-width: 45%; }
 
     .streaming { width: 38svh; }
-    .lyrics img { width: 38svh; }
+    .lyrics a { width: 38svh; }
     .social__item img { width: clamp(32px, 9vw, 54px); }
 
 
@@ -747,7 +752,7 @@ html, body {
     .hero__image { max-height: 56vh; max-width: 42%; }
 
     .streaming { width: 22%; }
-    .lyrics img { width: 22%; }
+    .lyrics a { width: 22%; }
 
     .about__title { font-size: clamp(80px, 7vw, 110px); }
     .about__text { font-size: clamp(15px, 1.2vw, 19px); }
@@ -764,7 +769,7 @@ html, body {
     
     /* Используем %, чтобы кнопки не были гигантскими */
     .streaming { width: 18%; margin-top: 2vh; }
-    .lyrics img { width: 18%; }
+    .lyrics a { width: 18%; }
 
     /* Расширяем текстовый контейнер, чтобы он не казался узким */
     .about__title { font-size: clamp(100px, 6vw, 140px); max-width: 1000px; }
@@ -795,7 +800,7 @@ html, body {
     .hero__image { max-height: 58vh; max-width: 30%; }
 
     .streaming { width: 36svh; margin-top: 2vh; }
-    .lyrics img { width: 36svh; }
+    .lyrics a { width: 36svh; }
 
     /* Желтая волна должна быть пропорциональна экрану */
     .yellow-panel__wave { height: clamp(80px, 8vh, 140px); }
@@ -830,7 +835,7 @@ html, body {
 
     /* Иконки стримингов и lyrics — фиксированный % вместо svh */
     .streaming { width: 75%; margin-top: 2svh; }
-    .lyrics img { width: 75%; }
+    .lyrics a { width: 75%; }
 
     /* Желтая панель — меньше отступ снизу под шторку */
     .yellow-panel { padding-bottom: 80px; }
@@ -871,7 +876,7 @@ html, body {
         width: 42svh; 
         margin-top: 3vh; 
     }
-    .lyrics img { 
+    .lyrics a { 
         width: 42svh; 
     }
 
